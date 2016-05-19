@@ -40,6 +40,11 @@ call dein#add('scrooloose/syntastic')
 call dein#add('terryma/vim-multiple-cursors')
 call dein#add('alunny/pegjs-vim')
 
+
+"" Vim-Session
+call dein#add('xolox/vim-misc')
+call dein#add('xolox/vim-session')
+
 "" Custom bundles
 "" Haskell Bundle
 call dein#add("eagletmt/neco-ghc")
