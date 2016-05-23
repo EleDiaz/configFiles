@@ -14,32 +14,29 @@ call dein#begin(expand('~/.config/nvim'))
 " Required:
 call dein#add('Shougo/dein.vim')
 
-" Add or remove your plugins here:
+" Add or remove your plugins here
+call dein#add('mhinz/vim-startify')
+call dein#add('ryanoasis/vim-devicons')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
-call dein#add('tpope/vim-commentary')
-call dein#add('tpope/vim-fugitive')
-
 call dein#add('scrooloose/nerdtree')
 call dein#add('jistr/vim-nerdtree-tabs.git')
-
-call dein#add( 'tpope/vim-commentary')
-call dein#add( 'tpope/vim-fugitive')
-call dein#add( 'ctrlpvim/ctrlp.vim')
-
-call dein#add('bronson/vim-trailing-whitespace')
+call dein#add('tpope/vim-commentary')
+call dein#add('tpope/vim-fugitive')
+call dein#add('ctrlpvim/ctrlp.vim')
 call dein#add('jiangmiao/auto-pairs')
 call dein#add('majutsushi/tagbar')
 call dein#add("Yggdroot/indentLine")
-
 call dein#add('bronson/vim-trailing-whitespace')
 call dein#add('scrooloose/syntastic')
 call dein#add('terryma/vim-multiple-cursors')
 call dein#add('alunny/pegjs-vim')
-
+call dein#add('easymotion/vim-easymotion')
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('junegunn/vim-easy-align')
 
 "" Vim-Session
 call dein#add('xolox/vim-misc')
@@ -73,11 +70,12 @@ call dein#add('gorodinskiy/vim-coloresque')
 call dein#add('tpope/vim-haml')
 call dein#add('mattn/emmet-vim')
 
+"" Rust bundle
+call dein#add('racer-rust/vim-racer')
+call dein#add('rust-lang/rust.vim')
 
 " You can specify revision/branch/tag.
-call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
-
-
+call dein#add('Shougo/vimshell')
 
 " Required:
 call dein#end()
@@ -93,7 +91,10 @@ endif
 let g:deoplete#enable_at_startup = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
+let g:tsuquyomi_completion_detail = 1
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+let g:rustfmt_autosave = 1
 
 "End dein Scripts-------------------------
 
@@ -145,6 +146,15 @@ let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
 
+" Terminal easy exit
+tnoremap <Esc> <C-\><C-n>
+
+map <Leader> <Plug>(easymotion-prefix)
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+
 
 "*****************************************************************************
 "" Visual Settings
@@ -155,7 +165,7 @@ set number
 
 let no_buffers_menu=1
 
-colorscheme molokai
+"colorscheme molokai
 
 set mousemodel=popup
 set t_Co=256
@@ -233,12 +243,6 @@ let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
-
-" grep.vim
-nnoremap <silent> <leader>f :Rgrep<CR>
-let Grep_Default_Options = '-IR'
-let Grep_Skip_Files = '*.log *.db'
-let Grep_Skip_Dirs = '.git node_modules'
 
 " vimshell.vim
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
@@ -421,7 +425,6 @@ vnoremap K :m '<-2<CR>gv=gv
 "" Open current line on GitHub
 noremap ,o :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=line('.')<CR> \| xargs open<CR><CR>
 
-
 let g:javascript_enable_domhtmlcss = 1
 
 " vim-javascript
@@ -506,7 +509,3 @@ vnoremap <leader>rem  :RExtractMethod<cr>
 if filereadable(expand("~/.config/nvim/local_init.vim"))
   source ~/.config/nvim/local_init.vim
 endif
-
-l!
-cnor!
-
