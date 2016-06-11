@@ -1,0 +1,6 @@
+[submodule ".xmonad"]
+	path = .xmonad
+	url = git@github.com:EleDiaz/yacfoxmonad.git
+[submodule ".config/awesome"]
+	path = .config/awesome
+	url = git@github.com:EleDiaz/awesome-config.git

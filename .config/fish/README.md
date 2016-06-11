@@ -1,0 +1,3 @@
+# Fish Configuration
+
+Install fisherman
