@@ -15,6 +15,7 @@ call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 
 " Add or remove your plugins here
+call dein#add('chriskempson/base16-vim')
 call dein#add('mhinz/vim-startify')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('Shougo/neosnippet.vim')
@@ -31,7 +32,8 @@ call dein#add('jiangmiao/auto-pairs')
 call dein#add('majutsushi/tagbar')
 call dein#add("Yggdroot/indentLine")
 call dein#add('bronson/vim-trailing-whitespace')
-call dein#add('scrooloose/syntastic')
+call dein#add('neomake/neomake')
+""call dein#add('scrooloose/syntastic')
 call dein#add('terryma/vim-multiple-cursors')
 call dein#add('alunny/pegjs-vim')
 call dein#add('easymotion/vim-easymotion')
@@ -45,14 +47,15 @@ call dein#add('xolox/vim-session')
 "" Custom bundles
 "" Haskell Bundle
 call dein#add("eagletmt/neco-ghc")
-call dein#add("dag/vim2hs")
-call dein#add("pbrisbin/vim-syntax-shakespeare")
+call dein#add("neovimhaskell/haskell-vim")
 
 "" Python Bundle
 call dein#add("davidhalter/jedi-vim")
 
 "" Javascript Bundle
 call dein#add('jelera/vim-javascript-syntax')
+"call dein#add('marijnh/tern_for_vim')
+call dein#add('carlitux/deoplete-ternjs')
 call dein#add('Quramy/tsuquyomi')
 call dein#add('leafgarland/typescript-vim')
 
@@ -74,8 +77,8 @@ call dein#add('mattn/emmet-vim')
 call dein#add('racer-rust/vim-racer')
 call dein#add('rust-lang/rust.vim')
 
-" You can specify revision/branch/tag.
 call dein#add('Shougo/vimshell')
+call dein#add('dag/vim-fish')
 
 " Required:
 call dein#end()
@@ -138,7 +141,7 @@ set noswapfile
 
 set fileformats=unix,dos,mac
 set showcmd
-set shell=/bin/zsh
+set shell=/usr/bin/fish
 
 " session management
 let g:session_directory = "~/.config/nvim/session"
@@ -154,6 +157,7 @@ map <Leader> <Plug>(easymotion-prefix)
 map  <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader>f <Plug>(easymotion-overwin-f)
 
+set rtp+=~/.fzf
 
 
 "*****************************************************************************
@@ -165,22 +169,25 @@ set number
 
 let no_buffers_menu=1
 
-"colorscheme molokai
+let base16colorspace=256  " Access colors present in 256 colorspace
+
+set background=dark
+colorscheme base16-default
 
 set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
-set gfn=Monospace\ 10
+set gfn=Monospace\14   " FantasqueSansMono Nerd Font Regular\14
 
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
     set guifont=Menlo:h12
     set transparency=7
+  else
+    set guifont=FantasqueSansMono Nerd Font Regular:h14
   endif
 else
   let g:CSApprox_loaded = 1
-
-
 endif
 
 if &term =~ '256color'
@@ -460,9 +467,7 @@ let g:syntastic_python_checkers=['python', 'flake8']
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
 
-
-let g:haskell_conceal_wide = 1
-let g:haskell_multiline_strings = 1
+let g:haskellmode_completion_ghc = 0
 let g:necoghc_enable_detailed_browse = 1
 autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 
