@@ -4,92 +4,99 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Required:
-set runtimepath^=~/.config/nvim/repos/github.com/Shougo/dein.vim
+call plug#begin('~/.vim/plugged')
 
-" Required:
-call dein#begin(expand('~/.config/nvim'))
-
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
 
 " Add or remove your plugins here
-call dein#add('chriskempson/base16-vim')
-call dein#add('mhinz/vim-startify')
-call dein#add('ryanoasis/vim-devicons')
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('scrooloose/nerdtree')
-call dein#add('jistr/vim-nerdtree-tabs.git')
-call dein#add('tpope/vim-commentary')
-call dein#add('tpope/vim-fugitive')
-call dein#add('ctrlpvim/ctrlp.vim')
-call dein#add('jiangmiao/auto-pairs')
-call dein#add('majutsushi/tagbar')
-call dein#add("Yggdroot/indentLine")
-call dein#add('bronson/vim-trailing-whitespace')
-call dein#add('neomake/neomake')
-""call dein#add('scrooloose/syntastic')
-call dein#add('terryma/vim-multiple-cursors')
-call dein#add('alunny/pegjs-vim')
-call dein#add('easymotion/vim-easymotion')
-call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-call dein#add('junegunn/vim-easy-align')
+Plug 'moll/vim-bbye'
+Plug 'mbbill/undotree'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+
+
+Plug 'chriskempson/base16-vim'
+Plug 'mhinz/vim-startify'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'Yggdroot/indentLine'
+
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/deoplete.nvim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'neomake/neomake'
+""Plug 'scrooloose/syntastic'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'alunny/pegjs-vim'
+Plug 'easymotion/vim-easymotion'
+
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'junegunn/vim-easy-align'
+
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 
 "" Vim-Session
-call dein#add('xolox/vim-misc')
-call dein#add('xolox/vim-session')
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 
 "" Custom bundles
 "" Haskell Bundle
-call dein#add("eagletmt/neco-ghc")
-call dein#add("neovimhaskell/haskell-vim")
+Plug 'eagletmt/neco-ghc'
+Plug 'eagletmt/ghcmod-vim'
+Plug 'neovimhaskell/haskell-vim'
+"Plug 'parsonsmatt/intero-neovim'
 
 "" Python Bundle
-call dein#add("davidhalter/jedi-vim")
+Plug 'davidhalter/jedi-vim'
 
 "" Javascript Bundle
-call dein#add('jelera/vim-javascript-syntax')
-"call dein#add('marijnh/tern_for_vim')
-call dein#add('carlitux/deoplete-ternjs')
-call dein#add('Quramy/tsuquyomi')
-call dein#add('leafgarland/typescript-vim')
+Plug 'jelera/vim-javascript-syntax'
+"Plug 'marijnh/tern_for_vim'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim'
+
+"" Purescript
+Plug 'FrigoEU/psc-ide-vim'
+Plug 'raichoo/purescript-vim'
 
 "" Ruby Bundle
-call dein#add("tpope/vim-rails")
-call dein#add("tpope/vim-rake")
-call dein#add("tpope/vim-projectionist")
-call dein#add("thoughtbot/vim-rspec")
-call dein#add("ecomba/vim-ruby-refactoring")
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-projectionist'
+Plug 'thoughtbot/vim-rspec'
+Plug 'ecomba/vim-ruby-refactoring'
 
 "" HTML Bundle
-call dein#add('amirh/HTML-AutoCloseTag')
-call dein#add('hail2u/vim-css3-syntax')
-call dein#add('gorodinskiy/vim-coloresque')
-call dein#add('tpope/vim-haml')
-call dein#add('mattn/emmet-vim')
+Plug 'amirh/HTML-AutoCloseTag'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'tpope/vim-haml'
+Plug 'mattn/emmet-vim'
 
 "" Rust bundle
-call dein#add('racer-rust/vim-racer')
-call dein#add('rust-lang/rust.vim')
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
 
-call dein#add('Shougo/vimshell')
-call dein#add('dag/vim-fish')
+"" Shells things
+Plug 'Shougo/vimshell'
+Plug 'dag/vim-fish'
 
-" Required:
-call dein#end()
+call plug#end()
 
 " Required:
 filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
 
 let g:deoplete#enable_at_startup = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -112,14 +119,15 @@ set fileencodings=utf-8
 "" Fix backspace indent
 set backspace=indent,eol,start
 
-"" Tabs. May be overriten by autocmd rules
+"" Spaces. May be overriten by autocmd rules
 set tabstop=4
 set softtabstop=0
-set shiftwidth=4
 set expandtab
+set shiftwidth=4
+set smarttab
 
 "" Map leader to ,
-let mapleader=','
+let mapleader="\<Space>"
 
 "" Enable hidden buffers
 set hidden
@@ -149,15 +157,7 @@ let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
 
-" Terminal easy exit
-tnoremap <Esc> <C-\><C-n>
-
-map <Leader> <Plug>(easymotion-prefix)
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-
-set rtp+=~/.fzf
+"" set rtp+=~/.fzf
 
 
 "*****************************************************************************
@@ -172,7 +172,7 @@ let no_buffers_menu=1
 let base16colorspace=256  " Access colors present in 256 colorspace
 
 set background=dark
-colorscheme base16-default
+colorscheme base16-default-dark
 
 set mousemodel=popup
 set t_Co=256
@@ -251,10 +251,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
 
-" vimshell.vim
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt =  '$ '
-
 "*****************************************************************************
 "" Functions
 "*****************************************************************************
@@ -296,9 +292,57 @@ augroup END
 
 set autoread
 
+
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
+" Terminal easy exit
+tnoremap <Esc> <C-\><C-n>
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+noremap <leader>b :Buffer<CR>
+noremap <leader>e :Files<CR>
+
+map <Leader> <Plug>(easymotion-prefix)
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" Buffer nav
+noremap <leader>z :bp<CR>
+noremap <leader>x :bn<CR>
+
+"" Close buffer
+nnoremap <Leader>c :Bdelete<CR>
+
+"" Clean search (highlight)
+nnoremap <silent> <leader><space> :noh<cr>
+
 "" Split
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
@@ -319,7 +363,7 @@ nnoremap <leader>ss :SaveSession<Space>
 nnoremap <leader>sd :DeleteSession<CR>
 nnoremap <leader>sc :CloseSession<CR>
 
-"" Tabs
+
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
@@ -327,63 +371,50 @@ nnoremap <silent> <S-t> :tabnew<CR>
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
-"" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 "" ctrlp.vim
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
-let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-let g:ctrlp_use_caching = 1
+" set wildmode=list:longest,list:full
+" set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+" let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|tox|ico|git|hg|svn))$'
+" let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
+" let g:ctrlp_use_caching = 1
 
-" The Silver Searcher
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
+" " The Silver Searcher
+" if executable('ag')
+"   set grepprg=ag\ --nogroup\ --nocolor
+"   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"   let g:ctrlp_use_caching = 0
+" endif
 
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
-let g:ctrlp_map = '<leader>e'
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+" cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+" noremap <leader>b :CtrlPBuffer<CR>
+" let g:ctrlp_map = '<leader>e'
+" let g:ctrlp_open_new_file = 'r'
+" let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
 " snippets
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
 
 let g:deoplete#enable_at_startup = 1
 
 " syntastic
-let g:syntastic_cpp_compiler='clang++'
-let g:syntastic_cpp_compiler_options=' -std=c++11'
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
+" let g:syntastic_cpp_compiler='clang++'
+" let g:syntastic_cpp_compiler_options=' -std=c++11'
+" let g:syntastic_always_populate_loc_list=1
+" let g:syntastic_error_symbol='✗'
+" let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_style_error_symbol = '✗'
+" let g:syntastic_style_warning_symbol = '⚠'
+" let g:syntastic_auto_loc_list=1
+" let g:syntastic_aggregate_errors = 1
 
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
-
-" IndentLine
-let g:indentLine_enabled = 1
-let g:indentLine_concealcursor = 0
-let g:indentLine_char = '┆'
-let g:indentLine_faster = 1
 
 " Disable visualbell
 set visualbell t_vb=
@@ -403,17 +434,6 @@ if has('macunix')
   vmap <C-c> :w !pbcopy<CR><CR>
 endif
 
-"" Buffer nav
-noremap <leader>z :bp<CR>
-noremap <leader>q :bp<CR>
-noremap <leader>x :bn<CR>
-noremap <leader>w :bn<CR>
-
-"" Close buffer
-noremap <leader>c :bd<CR>
-
-"" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -426,11 +446,11 @@ vmap < <gv
 vmap > >gv
 
 "" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap K :m '<-2<CR>gv=gv
 
 "" Open current line on GitHub
-noremap ,o :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=line('.')<CR> \| xargs open<CR><CR>
+" noremap ,o :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=line('.')<CR> \| xargs open<CR><CR>
 
 let g:javascript_enable_domhtmlcss = 1
 
@@ -462,53 +482,65 @@ let g:jedi#completions_command = "<C-Space>"
 let g:jedi#smart_auto_mappings = 0
 
 " syntastic
-let g:syntastic_python_checkers=['python', 'flake8']
+"let g:syntastic_python_checkers=['python', 'flake8']
 
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
 
-let g:haskellmode_completion_ghc = 0
+" Show types in completion suggestions
 let g:necoghc_enable_detailed_browse = 1
-autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
+" Resolve ghcmod base directory
+au FileType haskell let g:ghcmod_use_basedir = getcwd()
 
+autocmd! BufWritePost,BufEnter * Neomake
 
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
-augroup vimrc-ruby
+augroup haskell
   autocmd!
-  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
-  autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
+  set expandtab
+  autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>
+  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 
-let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-        \ 'm:modules',
-        \ 'c:classes',
-        \ 'd:describes',
-        \ 'C:contexts',
-        \ 'f:methods',
-        \ 'F:singleton methods'
-    \ ]
-\ }
+" let g:haskellmode_completion_ghc = 0
 
-" RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+" Not using ruby currently
+" let g:rubycomplete_buffer_loading = 1
+" let g:rubycomplete_classes_in_global = 1
+" let g:rubycomplete_rails = 1
 
-" Ruby refactory
-nnoremap <leader>rap  :RAddParameter<cr>
-nnoremap <leader>rcpc :RConvertPostConditional<cr>
-nnoremap <leader>rel  :RExtractLet<cr>
-vnoremap <leader>rec  :RExtractConstant<cr>
-vnoremap <leader>relv :RExtractLocalVariable<cr>
-nnoremap <leader>rit  :RInlineTemp<cr>
-vnoremap <leader>rrlv :RRenameLocalVariable<cr>
-vnoremap <leader>rriv :RRenameInstanceVariable<cr>
-vnoremap <leader>rem  :RExtractMethod<cr>
+" augroup vimrc-ruby
+"   autocmd!
+"   autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
+"   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
+" augroup END
+
+" let g:tagbar_type_ruby = {
+"     \ 'kinds' : [
+"         \ 'm:modules',
+"         \ 'c:classes',
+"         \ 'd:describes',
+"         \ 'C:contexts',
+"         \ 'f:methods',
+"         \ 'F:singleton methods'
+"     \ ]
+" \ }
+
+" " RSpec.vim mappings
+" map <Leader>t :call RunCurrentSpecFile()<CR>
+" map <Leader>s :call RunNearestSpec()<CR>
+" map <Leader>l :call RunLastSpec()<CR>
+" map <Leader>a :call RunAllSpecs()<CR>
+
+" " Ruby refactory
+" nnoremap <leader>rap  :RAddParameter<cr>
+" nnoremap <leader>rcpc :RConvertPostConditional<cr>
+" nnoremap <leader>rel  :RExtractLet<cr>
+" vnoremap <leader>rec  :RExtractConstant<cr>
+" vnoremap <leader>relv :RExtractLocalVariable<cr>
+" nnoremap <leader>rit  :RInlineTemp<cr>
+" vnoremap <leader>rrlv :RRenameLocalVariable<cr>
+" vnoremap <leader>rriv :RRenameInstanceVariable<cr>
+" vnoremap <leader>rem  :RExtractMethod<cr>
 
 "" Include user's local vim config
 if filereadable(expand("~/.config/nvim/local_init.vim"))
