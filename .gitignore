@@ -1,0 +1,7 @@
+*
+!.config/yabar
+!.config/awesome
+!.config/nvim
+!.config/fish
+!.xmonad
+!.Xresources

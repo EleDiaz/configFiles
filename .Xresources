@@ -1,0 +1,14 @@
+URxvt.font: xft:FantasqueSansMono Nerd Font:size=12
+
+
+
+
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.color-enabled: true
+rofi.color-window: argb:b2222222, #9f1d1d, #8a0079
+rofi.color-normal: argb:0000000, #ffffff, argb:0000000, #7e1188, #ffffff
+rofi.color-active: argb:0000000, #91ff71, argb:0000000, #79ff6e, #1b2b34
+rofi.color-urgent: argb:0000000, #ff0000, argb:0000000, #ffffff, #ff0000
+rofi.separator-style:                solid
