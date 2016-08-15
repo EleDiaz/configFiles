@@ -19,6 +19,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'francoiscabrol/ranger.vim'
 " A improved start screen for vim
 Plug 'mhinz/vim-startify'
+" Workspace control
+Plug 'vim-ctrlspace/vim-ctrlspace'
 
 " {{{ Personalization
 " Theme
@@ -34,6 +36,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 " Shows lines to align with same indentation
 Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
 " }}}
 
 Plug 'Shougo/neosnippet.vim'
@@ -79,6 +82,7 @@ Plug 'peterhoeg/vim-qml'
 Plug 'cespare/vim-toml'
 Plug 'digitaltoad/vim-pug'
 Plug 'kchmck/vim-coffee-script'
+Plug 'artur-shaik/vim-javacomplete2'
 
 call plug#end()
 
@@ -90,7 +94,7 @@ filetype plugin indent on
 "" Basic Setup
 "*****************************************************************************"
 "" Encoding
-set encoding=utf-8
+"set encoding=utf-8 " Give a error on :source %
 set fileencoding=utf-8
 set fileencodings=utf-8
 
@@ -144,15 +148,22 @@ set ruler
 set number
 set relativenumber
 
+set showtabline=0
+" normal move with cursors in end and start of line
+set whichwrap+=<,>,h,l,[,]
+
+set cursorline
+autocmd InsertEnter * highlight CursorLine guibg=#003000 guifg=fg
+autocmd InsertLeave * highlight CursorLine guibg=#300030 guifg=fg
 " Disable visualbell
 set visualbell t_vb=
 
 let no_buffers_menu=1
 
 let base16colorspace=256  " Access colors present in 256 colorspace
-
 set background=dark
 colorscheme base16-default-dark
+set termguicolors
 
 set mousemodel=popup
 set t_Co=256
@@ -160,7 +171,7 @@ set guioptions=egmrti
 " set gfn=FantasqueSansMono Nerd Font:14
 
 if has("gui_running")
-    set guifont=FantasqueSansMono Nerd Font:h14
+    set guifont=FantasqueSansMono Nerd Font:h12
 else
     let g:CSApprox_loaded = 1
 endif
@@ -189,6 +200,19 @@ endif
 
 
 " vim-airline
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : '',
+      \ 'i'  : '',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : '',
+      \ 'V'  : 'L',
+      \ '' : 'B',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '' : 'S',
+      \ }
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'base16'
 let g:airline#extensions#virtualenv#enabled = 1
@@ -221,7 +245,7 @@ cnoreabbrev Qall qall
 
 "" NERDTree configuration
 let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\target', '\.stack-work', '\node-modules']
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', 'target', '.stack-work', 'node_modules', 'typings', '.git']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
@@ -245,6 +269,7 @@ endif
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
+
 "" The PC is fast enough, do syntax highlight syncing from start
 augroup vimrc-sync-fromstart
   autocmd!
@@ -288,6 +313,8 @@ if has("persistent_undo")
     set undofile
 endif
 
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 let g:deoplete#enable_at_startup = 1
 
 " syntastic
@@ -305,7 +332,7 @@ let g:syntastic_aggregate_errors = 1
 "" Mappings
 "*****************************************************************************
 " Terminal easy exit
-tnoremap <Esc> <C-\><C-n>
+tnoremap <leader><Esc> <C-\><C-n>
 
 noremap <leader>b :Buffer<CR>
 noremap <leader>e :Files<CR>
@@ -398,7 +425,7 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#rename_command = "<leader>r"
 let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
+"let g:jedi#completions_command = "<C-Space>"
 
 
 "*****************************************************************************
@@ -418,3 +445,9 @@ augroup haskell
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 
+"*****************************************************************************
+"" Ctrl-Space
+"*****************************************************************************
+let g:CtrlSpaceSearchTiming = 500
+
+map <C-Space> <Esc>:CtrlSpace<CR>
