@@ -19,8 +19,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'francoiscabrol/ranger.vim'
 " A improved start screen for vim
 Plug 'mhinz/vim-startify'
-" Workspace control
-Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-surround'
 
 " {{{ Personalization
 " Theme
@@ -47,12 +47,11 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'bronson/vim-trailing-whitespace'
-" Plug 'neomake/neomake'
-Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
+" Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
-Plug 'plasticboy/vim-markdown'
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
@@ -62,7 +61,9 @@ Plug 'xolox/vim-session'
 Plug 'eagletmt/neco-ghc'
 Plug 'eagletmt/ghcmod-vim'
 Plug 'neovimhaskell/haskell-vim'
-Plug 'parsonsmatt/intero-neovim'
+Plug 'itchyny/vim-haskell-indent'
+"Plug 'enomsg/vim-haskellConcealPlus'
+"Plug 'parsonsmatt/intero-neovim'
 
 "" Python Bundle
 Plug 'klen/python-mode'
@@ -83,6 +84,11 @@ Plug 'cespare/vim-toml'
 Plug 'digitaltoad/vim-pug'
 Plug 'kchmck/vim-coffee-script'
 Plug 'artur-shaik/vim-javacomplete2'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'neovim/node-host', { 'do': 'npm install' }
+Plug 'mklabs/mdown.vim', { 'do': 'npm install' }
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 call plug#end()
 
@@ -121,7 +127,7 @@ set ignorecase
 set smartcase
 
 "" Encoding
-set bomb
+" set bomb  " dangerous
 set binary
 
 "" Directories for swp files
@@ -165,6 +171,8 @@ set background=dark
 colorscheme base16-default-dark
 set termguicolors
 
+set wim=longest:full,full
+
 set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
@@ -183,7 +191,7 @@ endif
 "" Let change cursor shape to ibeam or block depends of mode
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-set scrolloff=3
+set scrolloff=1
 
 "" Status bar
 set laststatus=2
@@ -262,14 +270,13 @@ if !exists('*s:setupWrapping')
   function s:setupWrapping()
     set wrap
     set wm=2
-    set textwidth=79
+    set textwidth=120
   endfunction
 endif
 
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-
 "" The PC is fast enough, do syntax highlight syncing from start
 augroup vimrc-sync-fromstart
   autocmd!
@@ -295,19 +302,6 @@ augroup vimrc-make-cmake
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
 
-set autoread
-
-
-function! s:fzf_statusline()
-  " Override statusline as you like
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
 if has("persistent_undo")
     set undodir=~/.undodir/
     set undofile
@@ -315,7 +309,13 @@ endif
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#max_list = 1000
+let g:deoplete#auto_complete_delay = 50
 
 " syntastic
 let g:syntastic_cpp_compiler='clang++'
@@ -334,10 +334,6 @@ let g:syntastic_aggregate_errors = 1
 " Terminal easy exit
 tnoremap <leader><Esc> <C-\><C-n>
 
-noremap <leader>b :Buffer<CR>
-noremap <leader>e :Files<CR>
-noremap <leader>g :GitFiles<CR>
-
 map <Leader> <Plug>(easymotion-prefix)
 " <Leader>f{char} to move to {char}
 map  <Leader>f <Plug>(easymotion-bd-f)
@@ -348,7 +344,7 @@ noremap <leader>z :bp<CR>
 noremap <leader>x :bn<CR>
 
 "" Close buffer
-nnoremap <Leader>c :Bdelete<CR>
+nnoremap <Leader>c :Bclose<CR>
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
@@ -382,18 +378,17 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 
-" Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-
 "" Copy/Paste/Cut
 if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
 endif
 
-noremap YY "+y<CR>
-noremap <leader>p "+gP<CR>
-noremap XX "+x<CR>
+nmap <leader>y "*y
+vmap <leader>y "*y
+nmap <leader>d "*d
+vmap <leader>d "*d
+nmap <leader>p "*p
+vmap <leader>p "*p
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -438,16 +433,72 @@ au FileType haskell let g:ghcmod_use_basedir = getcwd()
 
 " autocmd! BufWritePost,BufEnter * Neomake
 
+let g:neomake_open_list = 2
+
 augroup haskell
-  autocmd!
-  set expandtab
-  autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>
-  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    autocmd!
+    set expandtab
+    set tabstop=2
+    set softtabstop=0
+    set shiftwidth=2
+    set smarttab
+    autocmd! BufWritePost,BufEnter *.hs GhcModCheckAndLintAsync
+    "autocmd! BufWritePost,BufEnter *.hs Neomake
+    autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 
 "*****************************************************************************
-"" Ctrl-Space
+" Tagbar
 "*****************************************************************************
-let g:CtrlSpaceSearchTiming = 500
+nmap <silent> <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits,traits',
+        \'i:impls,trait implementations',
+    \]
+    \}
 
-map <C-Space> <Esc>:CtrlSpace<CR>
+"*****************************************************************************
+"" FZF Config
+"*****************************************************************************
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+noremap <leader>b :Buffer<CR>
+noremap <leader>e :Files<CR>
+noremap <leader>g :GitFiles<CR>
+noremap <C-Space> :Commands<CR>
+
+"*****************************************************************************
+"" Table mode
+"*****************************************************************************
+
+inoreabbrev <expr> <bar><bar>
+          \ s:isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ s:isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+fun! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endf
