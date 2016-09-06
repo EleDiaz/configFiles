@@ -6,6 +6,8 @@ set -gx PATH $HOME/.cargo/bin/ $NPM_PACKAGES/bin $HOME/.local/bin /usr/local/bin
 set -gx RUST_SRC_PATH $HOME/.cargo/rustc-1.10.0/src
 set -gx CARGO_HOME $HOME/.cargo
 
+set -gx FZF_DEFAULT_COMMAND 'ag --hidden --ignore .git --ignore .stack-work -g ""'
+
 set -U EDITOR nvim
 set -U TERM screen-256color
 

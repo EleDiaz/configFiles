@@ -48,7 +48,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'neomake/neomake'
-" Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
@@ -85,8 +84,6 @@ Plug 'digitaltoad/vim-pug'
 Plug 'kchmck/vim-coffee-script'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'neovim/node-host', { 'do': 'npm install' }
-Plug 'mklabs/mdown.vim', { 'do': 'npm install' }
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
