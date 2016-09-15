@@ -1,11 +1,15 @@
+""
+"" init.vim  --  Configuration
+""
+"" Taken from http://vim-bootstrap.com/
+""
+"" Modified by Eleazar Díaz Delgado
 
-"dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-call plug#begin('~/.vim/plugged')
-
+call plug#begin('~/.config/nvim/plugged')
 
 " Close buffers without close vim
 " Plug 'moll/vim-bbye'
@@ -30,6 +34,7 @@ Plug 'ryanoasis/vim-devicons'
 " Beaty status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'rakr/vim-two-firewatch'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -70,7 +75,6 @@ Plug 'klen/python-mode'
 Plug 'davidhalter/jedi-vim'
 
 "" Rust bundle
-" TODO: tags
 Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
 
@@ -91,7 +95,6 @@ call plug#end()
 
 " Required:
 filetype plugin indent on
-"End dein Scripts-------------------------
 
 "*****************************************************************************
 "" Basic Setup
@@ -111,7 +114,7 @@ set expandtab
 set shiftwidth=4
 set smarttab
 
-"" Map leader to ,
+"" Map leader to ' '
 let mapleader="\<Space>"
 
 "" Enable hidden buffers
@@ -156,19 +159,18 @@ set showtabline=0
 set whichwrap+=<,>,h,l,[,]
 
 set cursorline
+autocmd BufEnter * highlight CursorLine guibg=#300030 guifg=fg
 autocmd InsertEnter * highlight CursorLine guibg=#003000 guifg=fg
 autocmd InsertLeave * highlight CursorLine guibg=#300030 guifg=fg
+
 " Disable visualbell
 set visualbell t_vb=
-
-let no_buffers_menu=1
 
 let base16colorspace=256  " Access colors present in 256 colorspace
 set background=dark
 colorscheme base16-default-dark
-set termguicolors
 
-set wim=longest:full,full
+set termguicolors
 
 set mousemodel=popup
 set t_Co=256
@@ -203,29 +205,6 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
-
-" vim-airline
-let g:airline_mode_map = {
-      \ '__' : '-',
-      \ 'n'  : '',
-      \ 'i'  : '',
-      \ 'R'  : 'R',
-      \ 'c'  : 'C',
-      \ 'v'  : '',
-      \ 'V'  : 'L',
-      \ '' : 'B',
-      \ 's'  : 'S',
-      \ 'S'  : 'S',
-      \ '' : 'S',
-      \ }
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'base16'
-let g:airline#extensions#virtualenv#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-
 let g:startify_bookmarks =
             \ [ {'v': '~/.config/nvim/init.vim'}
             \ , {'f': '~/.config/fish/config.fish'}
@@ -248,29 +227,6 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-"" NERDTree configuration
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', 'target', '.stack-work', 'node_modules', 'typings', '.git']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 30
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-noremap <F3> :NERDTreeToggle<CR>
-
-"*****************************************************************************
-"" Functions
-"*****************************************************************************
-if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=120
-  endfunction
-endif
-
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
@@ -284,12 +240,6 @@ augroup END
 augroup vimrc-remember-cursor-position
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-augroup END
-
-"" txt
-augroup vimrc-wrapping
-  autocmd!
-  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 augroup END
 
 "" make/cmake
@@ -308,28 +258,13 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#max_abbr_width = 0
-let g:deoplete#max_menu_width = 0
-let g:deoplete#max_list = 1000
-let g:deoplete#auto_complete_delay = 50
-
-" syntastic
-let g:syntastic_cpp_compiler='clang++'
-let g:syntastic_cpp_compiler_options=' -std=c++11'
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
-
 "*****************************************************************************
-"" Mappings
+" Mappings
 "*****************************************************************************
 " Terminal easy exit
 tnoremap <leader><Esc> <C-\><C-n>
+
+imap jk <Esc>
 
 map <Leader> <Plug>(easymotion-prefix)
 " <Leader>f{char} to move to {char}
@@ -350,24 +285,14 @@ nnoremap <silent> <leader><space> :noh<cr>
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
 
-"" Git
-" noremap <Leader>ga :Gwrite<CR>
-" noremap <Leader>gc :Gcommit<CR>
-" noremap <Leader>gsh :Gpush<CR>
-" noremap <Leader>gll :Gpull<CR>
-" noremap <Leader>gs :Gstatus<CR>
-" noremap <Leader>gb :Gblame<CR>
-" noremap <Leader>gd :Gvdiff<CR>
-" noremap <Leader>gr :Gremove<CR>
-
 " session management
-" nnoremap <leader>so :OpenSession<Space>
-" nnoremap <leader>ss :SaveSession<Space>
-" nnoremap <leader>sd :DeleteSession<CR>
-" nnoremap <leader>sc :CloseSession<CR>
+nnoremap <leader>so :OpenSession<Space>
+nnoremap <leader>ss :SaveSession<Space>
+nnoremap <leader>sd :DeleteSession<CR>
+nnoremap <leader>sc :CloseSession<CR>
 
 "" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+"" nnoremap <leader>. :lcd %:p:h<CR>
 
 " snippets
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -398,7 +323,50 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 "*****************************************************************************
-"" vim-python
+"" Haskell
+"*****************************************************************************
+" Show types in completion suggestions
+let g:necoghc_enable_detailed_browse = 1
+" Resolve ghcmod base directory
+au FileType haskell let g:ghcmod_use_basedir = getcwd()
+
+augroup haskell
+    autocmd!
+    set expandtab
+    set tabstop=2
+    set softtabstop=0
+    set shiftwidth=2
+    set smarttab
+    autocmd! BufWritePost,BufEnter *.hs GhcModCheckAndLintAsync
+    "autocmd! BufWritePost,BufEnter *.hs Neomake
+    autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+augroup END
+
+"*****************************************************************************
+" Rust
+"*****************************************************************************
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits,traits',
+        \'i:impls,trait implementations',
+    \]
+    \}
+
+augroup rust
+  autocmd!
+  autocmd! BufWritePost,BufEnter *.rs Neomake
+augroup END
+
+"*****************************************************************************
+" Python
 "*****************************************************************************
 
 augroup vimrc-python
@@ -419,53 +387,62 @@ let g:jedi#rename_command = "<leader>r"
 let g:jedi#show_call_signatures = "0"
 "let g:jedi#completions_command = "<C-Space>"
 
+"*****************************************************************************
+" vim-airline
+"*****************************************************************************
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : '',
+      \ 'i'  : '',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : '',
+      \ 'V'  : 'L',
+      \ '' : 'B',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '' : 'S',
+      \ }
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'base16'
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
 
 "*****************************************************************************
-"" Haskell
+" Deoplete
 "*****************************************************************************
-" Show types in completion suggestions
-let g:necoghc_enable_detailed_browse = 1
-" Resolve ghcmod base directory
-au FileType haskell let g:ghcmod_use_basedir = getcwd()
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#max_list = 1000
+let g:deoplete#auto_complete_delay = 50
 
-" autocmd! BufWritePost,BufEnter * Neomake
-
-let g:neomake_open_list = 2
-
-augroup haskell
-    autocmd!
-    set expandtab
-    set tabstop=2
-    set softtabstop=0
-    set shiftwidth=2
-    set smarttab
-    autocmd! BufWritePost,BufEnter *.hs GhcModCheckAndLintAsync
-    "autocmd! BufWritePost,BufEnter *.hs Neomake
-    autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-augroup END
+"*****************************************************************************
+" NERDTree configuration
+"*****************************************************************************
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', 'target', '.stack-work', 'node_modules', 'typings', '.git']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 30
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+nnoremap <silent> <F2> :NERDTreeFind<CR>
+noremap <F3> :NERDTreeToggle<CR>
 
 "*****************************************************************************
 " Tagbar
 "*****************************************************************************
 nmap <silent> <F4> :TagbarToggle<CR>
+let g:rustfmt_autosave = 1
 let g:tagbar_autofocus = 1
-let g:tagbar_type_rust = {
-    \ 'ctagstype' : 'rust',
-    \ 'kinds' : [
-        \'T:types,type definitions',
-        \'f:functions,function definitions',
-        \'g:enum,enumeration names',
-        \'s:structure names',
-        \'m:modules,module names',
-        \'c:consts,static constants',
-        \'t:traits,traits',
-        \'i:impls,trait implementations',
-    \]
-    \}
 
 "*****************************************************************************
-"" FZF Config
+" FZF Config
 "*****************************************************************************
 function! s:fzf_statusline()
   " Override statusline as you like
