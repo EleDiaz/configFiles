@@ -25,6 +25,7 @@ Plug 'francoiscabrol/ranger.vim'
 Plug 'mhinz/vim-startify'
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-surround'
+" Plug 'hecal3/vim-leader-guide'
 
 " {{{ Personalization
 " Theme
@@ -44,8 +45,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 " }}}
 
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" Track the engine.
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'tpope/vim-commentary'
@@ -159,29 +162,29 @@ set showtabline=0
 set whichwrap+=<,>,h,l,[,]
 
 set cursorline
-autocmd BufEnter * highlight CursorLine guibg=#300030 guifg=fg
-autocmd InsertEnter * highlight CursorLine guibg=#003000 guifg=fg
-autocmd InsertLeave * highlight CursorLine guibg=#300030 guifg=fg
+" NOTE To Future: Don't set guifg it remove colors in current line
+autocmd BufEnter * highlight CursorLine guibg=#300030
+autocmd InsertEnter * highlight CursorLine guibg=#003000
+autocmd InsertLeave * highlight CursorLine guibg=#300030
+
+" Transparent background
+" NOTE If Problems: au ColorScheme * hi NonText ctermbg=none guibg=none
+au ColorScheme * hi Normal ctermbg=none guibg=none
 
 " Disable visualbell
 set visualbell t_vb=
 
 let base16colorspace=256  " Access colors present in 256 colorspace
 set background=dark
-colorscheme base16-default-dark
+" colorscheme base16-default-dark
+" colorscheme two-firewatch
+colorscheme base16-oceanicnext
 
 set termguicolors
 
 set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
-" set gfn=FantasqueSansMono Nerd Font:14
-
-if has("gui_running")
-    set guifont=FantasqueSansMono Nerd Font:h12
-else
-    let g:CSApprox_loaded = 1
-endif
 
 if &term =~ '256color'
     set t_ut=
@@ -190,6 +193,7 @@ endif
 "" Let change cursor shape to ibeam or block depends of mode
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
+" Scroll offset
 set scrolloff=1
 
 "" Status bar
@@ -257,6 +261,7 @@ endif
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:UltiSnipsExpandTrigger="<tab>"
 
 "*****************************************************************************
 " Mappings
